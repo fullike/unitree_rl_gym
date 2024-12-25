@@ -120,5 +120,6 @@ class H1_2Robot(LeggedRobot):
         return torch.sum(penalize, dim=(1,2))
     
     def _reward_hip_pos(self):
+        #lock left and right hip rotation except pitch
         return torch.sum(torch.square(self.dof_pos[:,[0,2,6,8]]), dim=1)
     

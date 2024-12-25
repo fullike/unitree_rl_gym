@@ -26,18 +26,24 @@ class H1_2RoughCfg(LeggedRobotCfg):
             'left_shoulder_roll_joint': 0,
             'left_shoulder_yaw_joint': 0,
             'left_elbow_pitch_joint': 0.3,
+            'left_elbow_roll_joint': 0.3,
+            'left_wrist_pitch_joint': 0.3,
+            'left_wrist_yaw_joint': 0.3,
 
             'right_shoulder_pitch_joint': 0.4,
             'right_shoulder_roll_joint': 0,
             'right_shoulder_yaw_joint': 0,
             'right_elbow_pitch_joint': 0.3,
+            'right_elbow_roll_joint': 0.3,
+            'right_wrist_pitch_joint': 0.3,
+            'right_wrist_yaw_joint': 0.3,
         }
 
     class env(LeggedRobotCfg.env):
-        # 3 + 3 + 3 + 12 + 12 + 12 + 2 = 47
-        num_observations = 47
-        num_privileged_obs = 50
-        num_actions = 12
+        # 3 + 3 + 3 + 27 + 27 + 27 + 2 = 92
+        num_observations = 92
+        num_privileged_obs = 95
+        num_actions = 27
       
 
     class control(LeggedRobotCfg.control):
@@ -51,6 +57,15 @@ class H1_2RoughCfg(LeggedRobotCfg):
             'knee_joint': 300.,
             'ankle_pitch_joint': 40.,
             'ankle_roll_joint': 40.,
+
+            'torso_joint': 200.,
+            'shoulder_yaw_joint': 200.,
+            'shoulder_roll_joint': 200.,
+            'shoulder_pitch_joint': 200.,
+            'elbow_pitch_joint': 300.,
+            'elbow_roll_joint': 300.,
+            'wrist_pitch_joint': 40.,
+            'wrist_yaw_joint': 40.,
         }  # [N*m/rad]
         damping = {
             'hip_yaw_joint': 2.5,
@@ -59,6 +74,15 @@ class H1_2RoughCfg(LeggedRobotCfg):
             'knee_joint': 4,
             'ankle_pitch_joint': 2.0,
             'ankle_roll_joint': 2.0,
+
+            'torso_joint': 2.5,
+            'shoulder_yaw_joint': 2.5,
+            'shoulder_roll_joint': 2.5,
+            'shoulder_pitch_joint': 2.5,
+            'elbow_pitch_joint': 4.,
+            'elbow_roll_joint': 4.,
+            'wrist_pitch_joint': 2.0,
+            'wrist_yaw_joint': 2.0,
         }  # [N*m/rad]  # [N*m*s/rad]
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
