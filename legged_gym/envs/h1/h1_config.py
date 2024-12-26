@@ -6,30 +6,30 @@ class H1RoughCfg( LeggedRobotCfg ):
         default_joint_angles = { # = target angles [rad] when action = 0.0
            'left_hip_yaw_joint' : 0. ,   
            'left_hip_roll_joint' : 0,               
-           'left_hip_pitch_joint' : -0.1,         
-           'left_knee_joint' : 0.3,       
-           'left_ankle_joint' : -0.2,     
+           'left_hip_pitch_joint' : -0.28,         
+           'left_knee_joint' : 0.79,       
+           'left_ankle_joint' : -0.52,     
            'right_hip_yaw_joint' : 0., 
            'right_hip_roll_joint' : 0, 
-           'right_hip_pitch_joint' : -0.1,                                       
-           'right_knee_joint' : 0.3,                                             
-           'right_ankle_joint' : -0.2,                                     
+           'right_hip_pitch_joint' : -0.28,                                       
+           'right_knee_joint' : 0.79,                                             
+           'right_ankle_joint' : -0.52,                                     
            'torso_joint' : 0., 
-           'left_shoulder_pitch_joint' : 0., 
+           'left_shoulder_pitch_joint' : 0.28, 
            'left_shoulder_roll_joint' : 0, 
            'left_shoulder_yaw_joint' : 0.,
-           'left_elbow_joint'  : 0.,
-           'right_shoulder_pitch_joint' : 0.,
+           'left_elbow_joint'  : 0.52,
+           'right_shoulder_pitch_joint' : 0.28,
            'right_shoulder_roll_joint' : 0.0,
            'right_shoulder_yaw_joint' : 0.,
-           'right_elbow_joint' : 0.,
+           'right_elbow_joint' : 0.52,
         }
     
     class env(LeggedRobotCfg.env):
-        # 3 + 3 + 3 + 10 + 10 + 10 + 2 = 41
-        num_observations = 41
-        num_privileged_obs = 44
-        num_actions = 10
+        # 3 + 3 + 3 + 19 + 19 + 19 + 2 = 68
+        num_observations = 68
+        num_privileged_obs = 71
+        num_actions = 19
       
 
     class domain_rand(LeggedRobotCfg.domain_rand):
@@ -47,21 +47,21 @@ class H1RoughCfg( LeggedRobotCfg ):
           # PD Drive parameters:
         stiffness = {'hip_yaw': 150,
                      'hip_roll': 150,
-                     'hip_pitch': 150,
+                     'hip_pitch': 200,
                      'knee': 200,
-                     'ankle': 40,
-                     'torso': 300,
-                     'shoulder': 150,
-                     "elbow":100,
+                     'ankle': 20,
+                     'torso': 200,
+                     'shoulder': 40,
+                     "elbow":40,
                      }  # [N*m/rad]
-        damping = {  'hip_yaw': 2,
-                     'hip_roll': 2,
-                     'hip_pitch': 2,
-                     'knee': 4,
-                     'ankle': 2,
-                     'torso': 6,
-                     'shoulder': 2,
-                     "elbow":2,
+        damping = {  'hip_yaw': 5,
+                     'hip_roll': 5,
+                     'hip_pitch': 5,
+                     'knee': 5,
+                     'ankle': 4,
+                     'torso': 5,
+                     'shoulder': 10,
+                     "elbow":10,
                      }  # [N*m/rad]  # [N*m*s/rad]
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
@@ -102,8 +102,8 @@ class H1RoughCfg( LeggedRobotCfg ):
 class H1RoughCfgPPO( LeggedRobotCfgPPO ):
     class policy:
         init_noise_std = 0.8
-        actor_hidden_dims = [32]
-        critic_hidden_dims = [32]
+        actor_hidden_dims = [128,128,128]
+        critic_hidden_dims = [128,128,128]
         activation = 'elu' # can be elu, relu, selu, crelu, lrelu, tanh, sigmoid
         # only for 'ActorCriticRecurrent':
         rnn_type = 'lstm'
@@ -113,7 +113,7 @@ class H1RoughCfgPPO( LeggedRobotCfgPPO ):
         entropy_coef = 0.01
     class runner( LeggedRobotCfgPPO.runner ):
         policy_class_name = "ActorCriticRecurrent"
-        max_iterations = 10000
+        max_iterations = 1000
         run_name = ''
         experiment_name = 'h1'
 
